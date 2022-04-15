@@ -1,5 +1,5 @@
 DEBUG = True
-
+# Division of WIDTH and HEIGHT by COLUMNS and ROWS respectively has to give round number
 WIDTH = 360
 HEIGHT = 504
 ROWS = 6
