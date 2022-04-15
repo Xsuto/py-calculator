@@ -12,7 +12,6 @@ def build_layout() -> GridLayout:
     layout = GridLayout(settings.WIDTH, settings.HEIGHT, settings.ROWS, settings.COLUMNS)
 
     layout.addComponent(TextField(text="0", background_color=(41, 40, 40)), 0, 1, 0, 4)
-
     y = 1
 
     layout.addComponent(Button(text="C", background_color=settings.BTN_COLOR_SECONDARY), y, y + 1, 0, 1)
