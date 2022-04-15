@@ -26,7 +26,6 @@ class Component:
         self._is_activated = False
         self._rect = pygame.Rect(start_x, start_y, width, height)
 
-    # It isn't necessary to update_rect in every set_foo call, but it is better to be safe than sorry
     def set_x(self, x: int):
         self._x = x
         self.update_rect()
@@ -67,8 +66,7 @@ class Component:
         if self._x + settings.HITBOX_MARGIN <= x <= self._width + self._x - settings.HITBOX_MARGIN:
             if self._y + self._height - settings.HITBOX_MARGIN >= y >= self._y + settings.HITBOX_MARGIN:
                 if settings.DEBUG:
-                    print("From is_clicked\nGot x: ", x, "\nMy x: ", self._x, "\nMy absolute width:",
-                          self._width + self._x)
+                    print(f"From is_clicked\nGot x: {x}\nMy x: {self._x}\nMy absolute width:{self._width + self._x}")
                 return True
         return False
 
@@ -91,7 +89,7 @@ class Component:
         pass
 
     def render_border(self):
-        pygame.draw.rect(WIN, self._border_color, self._rect, 1)
+        pygame.draw.rect(WIN, self._border_color, self._rect, settings.BORDER_SIZE)
 
     def render_background(self):
         pygame.draw.rect(WIN, self._current_background_color, self._rect)
