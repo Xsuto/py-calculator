@@ -67,7 +67,7 @@ class CalculatorLogic:
     # If number == 13.0  it will convert it to 13
     def formatted_output(self, x: float) -> str:
         if 1 > x > -1:
-            return str(x)
+            return str(x) if x != 0 else 0
         return str(int(x) if x % int(x) == 0 else x)
 
     def equal(self):
