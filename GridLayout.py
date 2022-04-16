@@ -35,15 +35,28 @@ class GridLayout:
     def addComponent(self, component: Component, grid_row_start: int = 0, grid_row_end: int = 0,
                      grid_column_start: int = 0,
                      grid_column_end: int = 0):
-        component.set_x(grid_column_start * (self.__width // self.__columns))
-        component.set_y(grid_row_start * (self.__height // self.__rows))
-        component.set_width(self.__width // self.__columns * (grid_column_end - grid_column_start))
-        component.set_height(self.__height // self.__rows * (grid_row_end - grid_row_start))
-        if settings.DEBUG_POSITION:
-            print(f"component x,y:{component.get_x()},{component.get_y()}"
-                  f"\ncomponent width: height: {component.get_width()},{component.get_height()}\n")
-        self.__components.append(GridItem(component, grid_row_start, grid_row_end, grid_column_start, grid_column_end))
+        if not self.check_for_collision(grid_row_start,grid_row_end,grid_column_start,grid_column_end):
+            component.set_x(grid_column_start * (self.__width // self.__columns))
+            component.set_y(grid_row_start * (self.__height // self.__rows))
+            component.set_width(self.__width // self.__columns * (grid_column_end - grid_column_start))
+            component.set_height(self.__height // self.__rows * (grid_row_end - grid_row_start))
+            if settings.DEBUG_POSITION:
+                print(f"component x,y:{component.get_x()},{component.get_y()}"
+                      f"\ncomponent width: height: {component.get_width()},{component.get_height()}\n")
+            self.__components.append(GridItem(component, grid_row_start, grid_row_end, grid_column_start, grid_column_end))
 
+    def check_for_collision(self,grid_row_start: int, grid_row_end: int,
+                     grid_column_start,
+                     grid_column_end):
+        for component in self.get_components():
+            if component.grid_row_start == grid_row_start and component.grid_row_end == grid_row_end:
+                if component.grid_column_start == grid_column_start and component.grid_column_end == grid_column_end:
+                    print(f"\nERROR: Components at "
+                          f"\ngrid_row_start,grid_row_end:{grid_row_start},{grid_row_end}"
+                          f"\ngrid_column_start: grid_column_end: {grid_column_start},{grid_column_end}\n"
+                          f"Collided")
+                    return True
+        return False
     def draw(self):
         for component in self.__components:
             component.item.draw()
