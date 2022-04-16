@@ -60,8 +60,11 @@ class CalculatorLogic:
 
     def update_textfield(self, value: str):
         textfield = self.__layout.get_component_by_type("textfield")
-        textfield[0].set_text(value)
+        if len(textfield):
+            textfield[0].set_text(value)
 
+    # Formatted output for textfield
+    # If number == 13.0  it will convert it to 13
     def formatted_output(self, x: float) -> str:
         if 1 > x > -1:
             return str(x)
@@ -88,7 +91,7 @@ class CalculatorLogic:
                 return
 
         if len(str(self.__first_number)) > settings.MAXIMAL_NUMBER_OF_DIGITS_IN_NUMBER:
-            self.__first_number = round(self.__first_number,settings.MAXIMAL_NUMBER_OF_DIGITS_IN_NUMBER)
+            self.__first_number = round(self.__first_number, settings.MAXIMAL_NUMBER_OF_DIGITS_IN_NUMBER)
 
         self.__second_number = 0
         self.__action = ""

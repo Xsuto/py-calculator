@@ -9,7 +9,6 @@ class TextField(Component):
         print(text_color)
         super(TextField, self).__init__(start_x, start_y, text, width, height, text_color, background_color)
 
-
     def get_type(self) -> str:
         return "textfield"
 
