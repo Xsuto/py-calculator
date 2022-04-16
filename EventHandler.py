@@ -36,22 +36,22 @@ class EventHandler():
     def mouse_down_event(self):
         x, y = pygame.mouse.get_pos()
         for component in self.__layout.get_components():
-            if component.item.is_clicked(x, y):
-                component.item.on_click()
+            if component.is_clicked(x, y):
+                component.on_click()
 
     def mouse_up_event(self):
         for component in self.__layout.get_components():
-            if component.item.is_activated():
-                component.item.flip_is_activated()
-                text = component.item.get_text()
+            if component.is_activated():
+                component.flip_is_activated()
+                text = component.get_text()
                 self.notify_calculator_logic(text)
 
     def mouse_move_event(self):
         x, y = pygame.mouse.get_pos()
         for component in self.__layout.get_components():
-            if component.item.is_activated():
-                if not component.item.is_clicked(x, y):
-                    component.item.flip_is_activated()
+            if component.is_activated():
+                if not component.is_clicked(x, y):
+                    component.flip_is_activated()
 
     def on_keyup_event(self, event: pygame.event):
         key = self.get_key(event)

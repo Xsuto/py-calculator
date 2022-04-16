@@ -7,7 +7,7 @@ from Component import Component
 # dataclass is c like struct
 @dataclass
 class GridItem:
-    item: Component
+    component: Component
     grid_row_start: int
     grid_row_end: int
     grid_column_start: int
@@ -16,7 +16,7 @@ class GridItem:
 
 class GridLayout:
     def __init__(self, width: int, height: int, rows: int, columns: int):
-        self.__components: [GridItem] = []
+        self.__items: [GridItem] = []
         self.__width = width
         self.__height = height
         self.__rows = rows
@@ -24,13 +24,13 @@ class GridLayout:
 
     def get_component_by_type(self, component_type: str) -> [Component]:
         output: [Component] = []
-        for component in self.__components:
-            if component.item.get_type() == component_type:
-                output.append(component.item)
+        for component in self.get_components():
+            if component.get_type() == component_type:
+                output.append(component)
         return output
 
     def get_components(self):
-        return self.__components
+        return [item.component for item in self.__items]
 
     def addComponent(self, component: Component, grid_row_start: int = 0, grid_row_end: int = 0,
                      grid_column_start: int = 0,
@@ -43,14 +43,14 @@ class GridLayout:
             if settings.DEBUG_POSITION:
                 print(f"component x,y:{component.get_x()},{component.get_y()}"
                       f"\ncomponent width: height: {component.get_width()},{component.get_height()}\n")
-            self.__components.append(GridItem(component, grid_row_start, grid_row_end, grid_column_start, grid_column_end))
+            self.__items.append(GridItem(component, grid_row_start, grid_row_end, grid_column_start, grid_column_end))
 
     def check_for_collision(self,grid_row_start: int, grid_row_end: int,
                      grid_column_start,
                      grid_column_end):
-        for component in self.get_components():
-            if component.grid_row_start == grid_row_start and component.grid_row_end == grid_row_end:
-                if component.grid_column_start == grid_column_start and component.grid_column_end == grid_column_end:
+        for item in self.__items:
+            if item.grid_row_start == grid_row_start and item.grid_row_end == grid_row_end:
+                if item.grid_column_start == grid_column_start and item.grid_column_end == grid_column_end:
                     print(f"\nERROR: Components at "
                           f"\ngrid_row_start,grid_row_end:{grid_row_start},{grid_row_end}"
                           f"\ngrid_column_start: grid_column_end: {grid_column_start},{grid_column_end}\n"
@@ -58,5 +58,5 @@ class GridLayout:
                     return True
         return False
     def draw(self):
-        for component in self.__components:
-            component.item.draw()
+        for component in self.get_components():
+            component.draw()

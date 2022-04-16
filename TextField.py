@@ -6,7 +6,6 @@ from setup import WIN, FONT
 class TextField(Component):
     def __init__(self, start_x: int = 0, start_y: int = 0, text="", width=settings.WIDTH, height=0,
                  text_color=settings.WHITE, background_color=settings.BLACK):
-        print(text_color)
         super(TextField, self).__init__(start_x, start_y, text, width, height, text_color, background_color)
 
     def get_type(self) -> str:

@@ -22,7 +22,6 @@ class CalculatorLogic:
                     else:
                         value += key
                 else:
-                    print(value)
                     value = str(int(float(value)))
                     if value == "0":
                         value = key
@@ -40,7 +39,6 @@ class CalculatorLogic:
                     else:
                         value += key
                 else:
-                    print(value)
                     value = str(int(float(value)))
                     if value == "0":
                         value = key
@@ -113,7 +111,6 @@ class CalculatorLogic:
             self.update_textfield(self.formatted_output(self.__first_number))
         else:
             self.__second_number *= 0.01
-            print(self.__second_number)
             self.update_textfield(self.formatted_output(self.__second_number))
 
     def dot(self):
@@ -126,7 +123,6 @@ class CalculatorLogic:
         if is_number_action:
             self.on_number_action(text)
         else:
-            print(text)
             if text.lower() == "c":
                 self.on_action_clear()
             elif text == "=":
