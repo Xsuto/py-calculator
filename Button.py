@@ -5,8 +5,8 @@ from setup import WIN, FONT
 
 class Button(Component):
     def __init__(self, start_x: int = 0, start_y: int = 0, text="", width=settings.WIDTH, height=0,
-                 text_color=settings.WHITE, background_color=settings.BLACK):
-        super(Button, self).__init__(start_x, start_y, text, width, height, text_color, background_color)
+                 text_color=settings.TEXT_COLOR_PRIMARY, background_color=settings.BTN_COLOR_PRIMARY, border_color=settings.BORDER_COLOR_PRIMARY):
+        super(Button, self).__init__(start_x, start_y, text, width, height, text_color, background_color,border_color)
 
     def get_type(self) -> str:
         return "button"

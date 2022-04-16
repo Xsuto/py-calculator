@@ -39,7 +39,7 @@ class GridLayout:
         component.set_y(grid_row_start * (self.__height // self.__rows))
         component.set_width(self.__width // self.__columns * (grid_column_end - grid_column_start))
         component.set_height(self.__height // self.__rows * (grid_row_end - grid_row_start))
-        if settings.DEBUG:
+        if settings.DEBUG_POSITION:
             print(f"component x,y:{component.get_x()},{component.get_y()}"
                   f"\ncomponent width: height: {component.get_width()},{component.get_height()}\n")
         self.__components.append(GridItem(component, grid_row_start, grid_row_end, grid_column_start, grid_column_end))

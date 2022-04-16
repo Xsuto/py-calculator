@@ -1,5 +1,6 @@
 import pygame
 
+import settings
 from CalculatorLogic import CalculatorLogic
 from GridLayout import GridLayout
 
@@ -28,6 +29,13 @@ class EventHandler():
                 if not component.item.is_clicked(x, y):
                     component.item.flip_is_activated()
 
+    def on_key_event(self, event: pygame.event):
+        if event.key == pygame.K_9:
+            textfiled = self.__layout.get_component_by_type("textfield")
+            if textfiled[0]:
+                textfiled[0].set_text("9")
+
+
     def check_for_event(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -38,3 +46,5 @@ class EventHandler():
                 self.mouse_up_event()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 self.mouse_down_event()
+            if event.type == pygame.KEYUP:
+                self.on_key_event(event)

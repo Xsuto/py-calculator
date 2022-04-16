@@ -1,5 +1,5 @@
 import pygame
-
+import setup
 import settings
 from Button import Button
 from CalculatorLogic import CalculatorLogic
@@ -11,7 +11,7 @@ from TextField import TextField
 def build_layout() -> GridLayout:
     layout = GridLayout(settings.WIDTH, settings.HEIGHT, settings.ROWS, settings.COLUMNS)
 
-    layout.addComponent(TextField(text="0", background_color=(41, 40, 40)), 0, 1, 0, 4)
+    layout.addComponent(TextField(text="0", background_color=(41, 40, 40), text_color=settings.TEXT_COLOR_PRIMARY), 0, 1, 0, 4)
     y = 1
 
     layout.addComponent(Button(text="C", background_color=settings.BTN_COLOR_SECONDARY), y, y + 1, 0, 1)
@@ -60,7 +60,6 @@ def main():
     event_handler = EventHandler(layout, logic, run)
     while run[0]:
         clock.tick(settings.FPS)
-
         event_handler.check_for_event()
         draw_window(layout)
 

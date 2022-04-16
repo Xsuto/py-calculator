@@ -9,9 +9,9 @@ class Component:
     # name <- public
     # _name <- protected
     # __name <- private
-    def __init__(self, start_x: int = 0, start_y: int = 0, text="", width=settings.WIDTH, height=0,
-                 text_color=settings.TEXT_COLOR_PRIMARY,
-                 background_color=settings.BLACK, border_color=settings.BLACK):
+    def __init__(self, start_x: int, start_y: int, text: str, width: int, height,
+                 text_color: (int,int,int),
+                 background_color: (int,int,int), border_color: (int,int,int) = (49,57,73)):
         self._x = start_x
         self._y = start_y
         self._text = text
@@ -42,6 +42,9 @@ class Component:
         self._height = height
         self.update_rect()
 
+    def set_text(self, text):
+        self._text = str(text)
+
     def get_type(self) -> str:
         return ""
 
@@ -59,14 +62,18 @@ class Component:
 
     def update_rect(self):
         self._rect = pygame.Rect(self._x, self._y, self._width, self._height)
-        if settings.DEBUG:
+        if settings.DEBUG_POSITION:
             print("Rect: ", self._rect)
 
     def is_clicked(self, x: int, y: int):
         if self._x + settings.HITBOX_MARGIN <= x <= self._width + self._x - settings.HITBOX_MARGIN:
             if self._y + self._height - settings.HITBOX_MARGIN >= y >= self._y + settings.HITBOX_MARGIN:
-                if settings.DEBUG:
-                    print(f"From is_clicked\nGot x: {x}\nMy x: {self._x}\nMy absolute width:{self._width + self._x}")
+                if settings.DEBUG_POSITION:
+                    print(
+                        f"From is_clicked\nGot x: {x}"
+                        f"\nMy x: {self._x - settings.HITBOX_MARGIN}"
+                        f"\nMy absolute width:{self._width + self._x - settings.HITBOX_MARGIN}"
+                    )
                 return True
         return False
 
