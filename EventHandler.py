@@ -15,7 +15,6 @@ class EventHandler():
             # We are doing this just to check if button text is a number if not it will throw exception
             int(text)
         except ValueError:
-            print("error",text)
             self.__calculator_logic.notify(False, text)
             return
 

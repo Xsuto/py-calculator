@@ -17,7 +17,6 @@ class CalculatorLogic:
             value = str(self.__first_number)
             if len(str(value)) < settings.MAXIMAL_NUMBER_OF_DIGITS_IN_NUMBER:
                 if self.__first_number_dot:
-                    print("lol",value[len(value) - 1])
                     if value[len(value) - 1] == "0":
                         value = value[:len(value) - 1] + key
                     else:
@@ -35,10 +34,18 @@ class CalculatorLogic:
         else:
             value = str(self.__second_number)
             if len(str(value)) < settings.MAXIMAL_NUMBER_OF_DIGITS_IN_NUMBER:
-                if value == "0":
-                    value = key
+                if self.__second_number_dot:
+                    if value[len(value) - 1] == "0":
+                        value = value[:len(value) - 1] + key
+                    else:
+                        value += key
                 else:
-                    value += key
+                    print(value)
+                    value = str(int(float(value)))
+                    if value == "0":
+                        value = key
+                    else:
+                        value += key
                 self.__second_number = float(value)
                 self.update_textfield(value)
 
@@ -61,6 +68,7 @@ class CalculatorLogic:
         return str(int(x) if x % int(x) == 0 else x)
 
     def equal(self):
+
         if self.__action == "+":
             self.__first_number = self.__first_number + self.__second_number
         elif self.__action == "-":
@@ -68,7 +76,19 @@ class CalculatorLogic:
         elif self.__action == "*":
             self.__first_number = self.__first_number * self.__second_number
         elif self.__action == "/":
-            self.__first_number = self.__first_number / self.__second_number
+            try:
+                self.__first_number = self.__first_number / self.__second_number
+            except ZeroDivisionError:
+                self.__first_number = 0
+                self.__second_number = 0
+                self.__action = ""
+                self.__first_number_dot = False
+                self.__second_number_dot = False
+                self.update_textfield("Not a Number")
+                return
+
+        if len(str(self.__first_number)) > settings.MAXIMAL_NUMBER_OF_DIGITS_IN_NUMBER:
+            self.__first_number = round(self.__first_number,settings.MAXIMAL_NUMBER_OF_DIGITS_IN_NUMBER)
 
         self.__second_number = 0
         self.__action = ""
