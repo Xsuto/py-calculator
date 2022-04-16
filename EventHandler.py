@@ -14,9 +14,12 @@ class EventHandler():
         try:
             # We are doing this just to check if button text is a number if not it will throw exception
             int(text)
-            self.__calculator_logic.notify(True, text)
         except ValueError:
+            print("error",text)
             self.__calculator_logic.notify(False, text)
+            return
+
+        self.__calculator_logic.notify(True, text)
 
     def get_key(self, event: pygame.event) -> str:
         is_shift_pressed = pygame.key.get_mods() & pygame.KMOD_SHIFT
