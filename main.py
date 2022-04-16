@@ -56,7 +56,7 @@ def main():
     run = [True]
     clock = pygame.time.Clock()
     layout = build_layout()
-    logic = CalculatorLogic()
+    logic = CalculatorLogic(layout)
     event_handler = EventHandler(layout, logic, run)
     while run[0]:
         clock.tick(settings.FPS)

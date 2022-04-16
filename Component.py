@@ -10,8 +10,8 @@ class Component:
     # _name <- protected
     # __name <- private
     def __init__(self, start_x: int, start_y: int, text: str, width: int, height,
-                 text_color: (int,int,int),
-                 background_color: (int,int,int), border_color: (int,int,int) = (49,57,73)):
+                 text_color: (int, int, int),
+                 background_color: (int, int, int), border_color: (int, int, int) = (49, 57, 73)):
         self._x = start_x
         self._y = start_y
         self._text = text
@@ -47,6 +47,9 @@ class Component:
 
     def get_type(self) -> str:
         return ""
+
+    def get_text(self) -> str:
+        return self._text
 
     def get_x(self):
         return self._x
