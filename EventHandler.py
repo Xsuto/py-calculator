@@ -31,6 +31,9 @@ class EventHandler():
             if key == "5":
                 return "%"
         else:
+            # alternative keybind for equal operation
+            if key == "return":
+                return "="
             return key
 
     def mouse_down_event(self):
@@ -43,8 +46,7 @@ class EventHandler():
         for component in self.__layout.get_components():
             if component.is_activated():
                 component.flip_is_activated()
-                text = component.get_text()
-                self.notify_calculator_logic(text)
+                self.notify_calculator_logic(component.get_text())
 
     def mouse_move_event(self):
         x, y = pygame.mouse.get_pos()
