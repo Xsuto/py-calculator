@@ -9,9 +9,9 @@ class Component:
     # name <- public
     # _name <- protected
     # __name <- private
-    def __init__(self, start_x: int, start_y: int, text: str, width: int, height,
+    def __init__(self, start_x: int, start_y: int, text: str, width: int, height: int,
                  text_color: (int, int, int),
-                 background_color: (int, int, int), border_color: (int, int, int) = (49, 57, 73)):
+                 background_color: (int, int, int), border_color: (int, int, int)):
         self._x = start_x
         self._y = start_y
         self._text = text
@@ -80,19 +80,16 @@ class Component:
                 return True
         return False
 
-    def flip_is_activated(self):
-        self._is_activated = not self._is_activated
+    def set_is_activated(self, is_activated: bool):
+        self._is_activated = is_activated
         if self._is_activated:
             self._current_background_color = self._activated_background_color
         else:
             self._current_background_color = self._background_color
 
+    # If variable is a bool we call getter for this variable is_foo
     def is_activated(self):
         return self._is_activated
-
-    # Virtual function that needs to be overwritten
-    def on_click(self):
-        pass
 
     # Virtual function that needs to be overwritten
     def draw(self):

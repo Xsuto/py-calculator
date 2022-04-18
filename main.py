@@ -60,6 +60,7 @@ def main():
     logic = CalculatorLogic(layout)
     event_handler = EventHandler(layout, logic, run)
     while run[0]:
+        # with clock.tick we are locking refresh rate to settings.FPS just to lower cpu usage
         clock.tick(settings.FPS)
         event_handler.check_for_event()
         draw_window(layout)

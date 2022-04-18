@@ -12,9 +12,6 @@ class Button(Component):
     def get_type(self) -> str:
         return "button"
 
-    def on_click(self):
-        self.flip_is_activated()
-
     def render_text(self):
         text = FONT.render(self._text, True, self._text_color, self._current_background_color)
         text_rect = text.get_rect()

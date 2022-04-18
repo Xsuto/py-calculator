@@ -1,5 +1,8 @@
 DEBUG_POSITION = False
 DEBUG_EVENT = True
+
+CAPITATION = "Calculator"
+
 # Division of WIDTH and HEIGHT by COLUMNS and ROWS respectively has to give round number
 WIDTH = 360
 HEIGHT = 504
@@ -11,7 +14,7 @@ BORDER_SIZE = 1
 MARGIN = 8
 HITBOX_MARGIN = 2
 
-MAXIMAL_NUMBER_OF_DIGITS_IN_NUMBER = 10
+MAXIMAL_NUMBER_OF_DIGITS_IN_NUMBER = 16
 
 FPS = 60
 

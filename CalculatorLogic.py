@@ -1,3 +1,5 @@
+import math
+
 import settings
 from GridLayout import GridLayout
 
@@ -11,43 +13,42 @@ class CalculatorLogic:
         self.__action: str = ""
         self.__second_number: float = 0
         self.__second_number_dot = False
+        # If we just compute equal and we clicked on a number then the first_number should be overwritten
+        # For example 4 + 5 = 9 -> click 1 -> first number should be 1 instead of 91
         self.__just_compute_equal = False
 
-    def on_number_action(self, number_as_str: str):
+    def add_number_to(self, number_as_str: str, to: float, should_be_after_dot: bool):
+        value = str(to)
+        if len(value) - 1 < settings.MAXIMAL_NUMBER_OF_DIGITS_IN_NUMBER:
+            if should_be_after_dot:
+                dot = value.find(".")
+                if dot > 0:
+                    if value[dot + 1] == "0":
+                        output = f"{value[0:dot]}.{number_as_str}"
+                        self.update_textfield(output)
+                        return float(output)
+                    output = value + number_as_str
+                    self.update_textfield(output)
+                    return float(output)
+                else:
+                    output = f"{value}.{number_as_str}"
+                    self.update_textfield(output)
+                    return float(output)
+            elif to == 0:
+                output = float(number_as_str)
+                self.update_textfield(self.formatted_output(output))
+                return float(output)
+            else:
+                output = to * 10 + int(number_as_str)
+                self.update_textfield(self.formatted_output(output))
+                return output
+        return to
 
+    def on_action_number(self, number_as_str: str):
         if self.__action == "":
-            value = str(self.__first_number)
-            if len(str(value)) < settings.MAXIMAL_NUMBER_OF_DIGITS_IN_NUMBER:
-                if self.__first_number_dot:
-                    if value[len(value) - 1] == "0":
-                        value = value[:len(value) - 1] + number_as_str
-                    else:
-                        value += number_as_str
-                else:
-                    value = str(int(float(value)))
-                    if value == "0":
-                        value = number_as_str
-                    else:
-                        value += number_as_str
-
-                self.__first_number = float(value)
-                self.update_textfield(value)
+            self.__first_number = self.add_number_to(number_as_str, self.__first_number, self.__first_number_dot)
         else:
-            value = str(self.__second_number)
-            if len(str(value)) < settings.MAXIMAL_NUMBER_OF_DIGITS_IN_NUMBER:
-                if self.__second_number_dot:
-                    if value[len(value) - 1] == "0":
-                        value = value[:len(value) - 1] + number_as_str
-                    else:
-                        value += number_as_str
-                else:
-                    value = str(int(float(value)))
-                    if value == "0":
-                        value = number_as_str
-                    else:
-                        value += number_as_str
-                self.__second_number = float(value)
-                self.update_textfield(value)
+            self.__second_number = self.add_number_to(number_as_str, self.__second_number, self.__second_number_dot)
 
     def on_action_clear(self):
         if self.__action == "":
@@ -63,15 +64,36 @@ class CalculatorLogic:
         if len(textfield):
             textfield[0].set_text(text)
 
-    # Formatted output for textfield
-    # If number == 13.0  it will convert it to 13
-    def formatted_output(self, x: float) -> str:
+    # Formatted output for textfield If number is bigger than Maximal_..._Number or already has 13.1313+e13 then,
+    # function will return 13+e13 (for example) If number == 13.0  it will convert it to 13
+    def formatted_output(self, x: float, should_have_dot: bool = False) -> str:
+        value = str(x)
+        if should_have_dot:
+            return f"{round(x)}."
         if 1 > x > -1:
-            return str(x) if x != 0 else 0
-        return str(int(x) if x % int(x) == 0 else x)
+            return value if x != 0 else 0
+        if int(x) / x == 1:
+            return str(int(x))
 
-    def equal(self):
+        # if we are adding 1.1 + 2.2 we will get 3.30000005432111 because of round-off error. We want to display 3.3, so
+        # if we notice that there is 0 after 0 multiple times at some point we will just cut the string
+        i = 0
+        build_output = ""
+        for number in value:
+            print("number ", number)
+            if i == 4:
+                lenght = len(build_output)
+                build_output = build_output[0:lenght-4]
+                break
+            build_output = build_output + number
+            if number != "0":
+                i = 0
+            else:
+                i += 1
+        return build_output
 
+    def on_action_equal(self):
+        print(f"first: {self.__first_number}, second: {self.__second_number}, action: {self.__action}")
         if self.__action == "+":
             self.__first_number = self.__first_number + self.__second_number
         elif self.__action == "-":
@@ -90,8 +112,6 @@ class CalculatorLogic:
                 self.update_textfield("Not a Number")
                 return
 
-        if len(str(self.__first_number)) > settings.MAXIMAL_NUMBER_OF_DIGITS_IN_NUMBER:
-            self.__first_number = round(self.__first_number, settings.MAXIMAL_NUMBER_OF_DIGITS_IN_NUMBER)
         self.__second_number = 0
         self.__action = ""
         self.__first_number_dot = False
@@ -99,7 +119,7 @@ class CalculatorLogic:
         self.__just_compute_equal = True
         self.update_textfield(self.formatted_output(self.__first_number))
 
-    def reverse_sign(self):
+    def on_action_reverse_sign(self):
         if self.__action == "":
             self.__first_number = -self.__first_number
             self.update_textfield(self.formatted_output(self.__first_number))
@@ -107,7 +127,7 @@ class CalculatorLogic:
             self.__second_number = -self.__second_number
             self.update_textfield(self.formatted_output(self.__second_number))
 
-    def percentage(self):
+    def on_action_percentage(self):
         if self.__action == "":
             self.__first_number *= 0.01
             self.update_textfield(self.formatted_output(self.__first_number))
@@ -115,29 +135,38 @@ class CalculatorLogic:
             self.__second_number *= 0.01
             self.update_textfield(self.formatted_output(self.__second_number))
 
-    def dot(self):
+    def on_action_dot(self):
         if self.__action == "":
             self.__first_number_dot = True
+            self.update_textfield(self.formatted_output(self.__first_number, self.__first_number_dot))
         else:
             self.__second_number_dot = True
+            self.update_textfield(self.formatted_output(self.__second_number, self.__second_number_dot))
 
-    def notify(self, is_number_action: bool, text: str):
+    # Thanks to this function EventHandler can communicate with us
+    def notify(self, is_number_action: bool, value: str):
         if is_number_action:
             if self.__just_compute_equal:
                 self.__first_number = 0
                 self.__just_compute_equal = False
-            self.on_number_action(text)
+            self.on_action_number(value)
         else:
+            # Dot action is special action that should reset first number if just_compute_equal
+            if value == ".":
+                if self.__just_compute_equal:
+                    self.__just_compute_equal = False
+                    self.__first_number = 0
+                self.on_action_dot()
+                return
+
             self.__just_compute_equal = False
-            if text.lower() == "c":
+            if value.lower() == "c":
                 self.on_action_clear()
-            elif text == "=":
-                self.equal()
-            elif text == "+/-":
-                self.reverse_sign()
-            elif text == "%":
-                self.percentage()
-            elif text == ".":
-                self.dot()
+            elif value == "=":
+                self.on_action_equal()
+            elif value == "+/-":
+                self.on_action_reverse_sign()
+            elif value == "%":
+                self.on_action_percentage()
             else:
-                self.__action = text
+                self.__action = value
