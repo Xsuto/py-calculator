@@ -1,5 +1,3 @@
-import math
-
 import settings
 from GridLayout import GridLayout
 
@@ -44,21 +42,6 @@ class CalculatorLogic:
                 return output
         return to
 
-    def on_action_number(self, number_as_str: str):
-        if self.__action == "":
-            self.__first_number = self.add_number_to(number_as_str, self.__first_number, self.__first_number_dot)
-        else:
-            self.__second_number = self.add_number_to(number_as_str, self.__second_number, self.__second_number_dot)
-
-    def on_action_clear(self):
-        if self.__action == "":
-            self.__first_number = 0
-            self.__first_number_dot = False
-        else:
-            self.__second_number = 0
-            self.__second_number_dot = False
-        self.update_textfield(0)
-
     def update_textfield(self, text: str):
         textfield = self.__layout.get_component_by_type("textfield")
         if len(textfield):
@@ -75,29 +58,20 @@ class CalculatorLogic:
         if int(x) / x == 1:
             return str(int(x))
 
-        # if we are adding 1.1 + 2.2 we will get 3.30000005432111 because of round-off error. We want to display 3.3, so
-        # if we notice that there is 0 after 0 multiple times at some point we will just cut the string
-        i = 0
-        build_output = ""
-        for number in value:
-            print("number ", number)
-            if i == 4:
-                lenght = len(build_output)
-                build_output = build_output[0:lenght-4]
-                break
-            build_output = build_output + number
-            if number != "0":
-                i = 0
-            else:
-                i += 1
-        return build_output
+        return str(x)
 
     def on_action_equal(self):
-        print(f"first: {self.__first_number}, second: {self.__second_number}, action: {self.__action}")
+        print(f"Before action\nfirst: {self.__first_number}, second: {self.__second_number}, action: {self.__action}")
+        # if we are adding or subtracting for example 1.1 + 2.2 we will get 3.30000005432111 because of round-off
+        # error. We want to display 3.3, so we need to round number.
+        # [::-1] will reverse string so 1.2345 -> 2345.1.find(".") -> 4
+        first_number_decimal_numbers = str(self.__first_number)[::-1].find(".")
+        second_number_decimal_numbers = str(self.__second_number)[::-1].find(".")
+        round_to = first_number_decimal_numbers if first_number_decimal_numbers > second_number_decimal_numbers else second_number_decimal_numbers
         if self.__action == "+":
-            self.__first_number = self.__first_number + self.__second_number
+            self.__first_number = round(self.__first_number + self.__second_number, round_to)
         elif self.__action == "-":
-            self.__first_number = self.__first_number - self.__second_number
+            self.__first_number = round(self.__first_number - self.__second_number, round_to)
         elif self.__action == "*":
             self.__first_number = self.__first_number * self.__second_number
         elif self.__action == "/":
@@ -112,12 +86,28 @@ class CalculatorLogic:
                 self.update_textfield("Not a Number")
                 return
 
+        print(f"After action\nfirst: {self.__first_number}, second: {self.__second_number}, action: {self.__action}")
         self.__second_number = 0
         self.__action = ""
         self.__first_number_dot = False
         self.__second_number_dot = False
         self.__just_compute_equal = True
         self.update_textfield(self.formatted_output(self.__first_number))
+
+    def on_action_number(self, number_as_str: str):
+        if self.__action == "":
+            self.__first_number = self.add_number_to(number_as_str, self.__first_number, self.__first_number_dot)
+        else:
+            self.__second_number = self.add_number_to(number_as_str, self.__second_number, self.__second_number_dot)
+
+    def on_action_clear(self):
+        if self.__action == "":
+            self.__first_number = 0
+            self.__first_number_dot = False
+        else:
+            self.__second_number = 0
+            self.__second_number_dot = False
+        self.update_textfield(0)
 
     def on_action_reverse_sign(self):
         if self.__action == "":
