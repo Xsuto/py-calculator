@@ -9,45 +9,172 @@ from TextField import TextField
 
 
 def build_layout() -> GridLayout:
-    layout = GridLayout(settings.WIDTH, settings.HEIGHT, settings.ROWS, settings.COLUMNS)
+    layout = GridLayout(
+        settings.WIDTH,
+        settings.HEIGHT,
+        settings.ROWS,
+        settings.COLUMNS,
+    )
 
-    layout.addComponent(TextField(text="0", background_color=(41, 40, 40), text_color=settings.TEXT_COLOR_PRIMARY), 0,
-                        1, 0, 4)
+    layout.addComponent(
+        TextField(
+            text="0",
+            background_color=(41, 40, 40),
+            text_color=settings.TEXT_COLOR_PRIMARY,
+        ),
+        0,
+        1,
+        0,
+        4,
+    )
     y = 1
 
-    layout.addComponent(Button(text="C", background_color=settings.BTN_COLOR_SECONDARY), y, y + 1, 0, 1)
-    layout.addComponent(Button(text="+/-", background_color=settings.BTN_COLOR_SECONDARY), y, y + 1, 1, 2)
-    layout.addComponent(Button(text="%", background_color=settings.BTN_COLOR_SECONDARY), y, y + 1, 2, 3)
-    layout.addComponent(Button(text="/", background_color=settings.BTN_COLOR_SPECIAL), y, y + 1, 3, 4)
+    layout.addComponent(
+        Button(text="C", background_color=settings.BTN_COLOR_SECONDARY),
+        y,
+        y + 1,
+        0,
+        1,
+    )
+    layout.addComponent(
+        Button(text="+/-", background_color=settings.BTN_COLOR_SECONDARY),
+        y,
+        y + 1,
+        1,
+        2,
+    )
+    layout.addComponent(
+        Button(text="%", background_color=settings.BTN_COLOR_SECONDARY),
+        y,
+        y + 1,
+        2,
+        3,
+    )
+    layout.addComponent(
+        Button(text="/", background_color=settings.BTN_COLOR_SPECIAL),
+        y,
+        y + 1,
+        3,
+        4,
+    )
     y += 1
 
-    layout.addComponent(Button(text="7", background_color=settings.BTN_COLOR_PRIMARY), y, y + 1, 0, 1)
-    layout.addComponent(Button(text="8", background_color=settings.BTN_COLOR_PRIMARY), y, y + 1, 1, 2)
-    layout.addComponent(Button(text="9", background_color=settings.BTN_COLOR_PRIMARY), y, y + 1, 2, 3)
-    layout.addComponent(Button(text="*", background_color=settings.BTN_COLOR_SPECIAL), y, y + 1, 3, 4)
+    layout.addComponent(
+        Button(text="7", background_color=settings.BTN_COLOR_PRIMARY),
+        y,
+        y + 1,
+        0,
+        1,
+    )
+    layout.addComponent(
+        Button(text="8", background_color=settings.BTN_COLOR_PRIMARY),
+        y,
+        y + 1,
+        1,
+        2,
+    )
+    layout.addComponent(
+        Button(text="9", background_color=settings.BTN_COLOR_PRIMARY),
+        y,
+        y + 1,
+        2,
+        3,
+    )
+    layout.addComponent(
+        Button(text="*", background_color=settings.BTN_COLOR_SPECIAL),
+        y,
+        y + 1,
+        3,
+        4,
+    )
     y += 1
 
-    layout.addComponent(Button(text="4", background_color=settings.BTN_COLOR_PRIMARY), y, y + 1, 0, 1)
-    layout.addComponent(Button(text="5", background_color=settings.BTN_COLOR_PRIMARY), y, y + 1, 1, 2)
-    layout.addComponent(Button(text="6", background_color=settings.BTN_COLOR_PRIMARY), y, y + 1, 2, 3)
-    layout.addComponent(Button(text="-", background_color=settings.BTN_COLOR_SPECIAL), y, y + 1, 3, 4)
+    layout.addComponent(
+        Button(text="4", background_color=settings.BTN_COLOR_PRIMARY),
+        y,
+        y + 1,
+        0,
+        1,
+    )
+    layout.addComponent(
+        Button(text="5", background_color=settings.BTN_COLOR_PRIMARY),
+        y,
+        y + 1,
+        1,
+        2,
+    )
+    layout.addComponent(
+        Button(text="6", background_color=settings.BTN_COLOR_PRIMARY),
+        y,
+        y + 1,
+        2,
+        3,
+    )
+    layout.addComponent(
+        Button(text="-", background_color=settings.BTN_COLOR_SPECIAL),
+        y,
+        y + 1,
+        3,
+        4,
+    )
     y += 1
 
-    layout.addComponent(Button(text="1", background_color=settings.BTN_COLOR_PRIMARY), y, y + 1, 0, 1)
-    layout.addComponent(Button(text="2", background_color=settings.BTN_COLOR_PRIMARY), y, y + 1, 1, 2)
-    layout.addComponent(Button(text="3", background_color=settings.BTN_COLOR_PRIMARY), y, y + 1, 2, 3)
-    layout.addComponent(Button(text="+", background_color=settings.BTN_COLOR_SPECIAL), y, y + 1, 3, 4)
+    layout.addComponent(
+        Button(text="1", background_color=settings.BTN_COLOR_PRIMARY),
+        y,
+        y + 1,
+        0,
+        1,
+    )
+    layout.addComponent(
+        Button(text="2", background_color=settings.BTN_COLOR_PRIMARY),
+        y,
+        y + 1,
+        1,
+        2,
+    )
+    layout.addComponent(
+        Button(text="3", background_color=settings.BTN_COLOR_PRIMARY),
+        y,
+        y + 1,
+        2,
+        3,
+    )
+    layout.addComponent(
+        Button(text="+", background_color=settings.BTN_COLOR_SPECIAL),
+        y,
+        y + 1,
+        3,
+        4,
+    )
     y += 1
-    layout.addComponent(Button(text="0", background_color=settings.BTN_COLOR_PRIMARY), y, y + 1, 0, 2)
-    layout.addComponent(Button(text=".", background_color=settings.BTN_COLOR_PRIMARY), y, y + 1, 2, 3)
-    layout.addComponent(Button(text="=", background_color=settings.BTN_COLOR_SPECIAL), y, y + 1, 3, 4)
+    layout.addComponent(
+        Button(text="0", background_color=settings.BTN_COLOR_PRIMARY),
+        y,
+        y + 1,
+        0,
+        2,
+    )
+    layout.addComponent(
+        Button(text=".", background_color=settings.BTN_COLOR_PRIMARY),
+        y,
+        y + 1,
+        2,
+        3,
+    )
+    layout.addComponent(
+        Button(text="=", background_color=settings.BTN_COLOR_SPECIAL),
+        y,
+        y + 1,
+        3,
+        4,
+    )
 
-
-    #Collision Tests
-    #layout.addComponent(Button(text="+", background_color=settings.BTN_COLOR_SPECIAL), 0,1, 0, 1)
-    #layout.addComponent(Button(text="+", background_color=settings.BTN_COLOR_SPECIAL), 3,4, 2, 4)
-    #layout.addComponent(Button(text="+", background_color=settings.BTN_COLOR_SPECIAL), 1, 3, 2, 3)
-    #layout.addComponent(Button(text="+", background_color=settings.BTN_COLOR_SPECIAL), 1,4, 0, 2)
+    # Collision Tests
+    # layout.addComponent(Button(text="+", background_color=settings.BTN_COLOR_SPECIAL), 0,1, 0, 1)
+    # layout.addComponent(Button(text="+", background_color=settings.BTN_COLOR_SPECIAL), 3,4, 2, 4)
+    # layout.addComponent(Button(text="+", background_color=settings.BTN_COLOR_SPECIAL), 1, 3, 2, 3)
+    # layout.addComponent(Button(text="+", background_color=settings.BTN_COLOR_SPECIAL), 1,4, 0, 2)
     return layout
 
 
@@ -71,5 +198,5 @@ def main():
         draw_window(layout)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

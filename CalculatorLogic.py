@@ -1,9 +1,8 @@
-import settings
 from GridLayout import GridLayout
+import settings
 
 
 class CalculatorLogic:
-
     def __init__(self, layout: GridLayout):
         self.__layout: GridLayout = layout
         self.__first_number: float = 0
@@ -35,7 +34,7 @@ class CalculatorLogic:
             elif to == 0:
                 output = float(number_as_str)
                 self.update_textfield(self.formatted_output(output))
-                return float(output)
+                return output
             else:
                 output = to * 10 + int(number_as_str)
                 self.update_textfield(self.formatted_output(output))
@@ -61,17 +60,29 @@ class CalculatorLogic:
         return str(x)
 
     def on_action_equal(self):
-        print(f"Before action\nfirst: {self.__first_number}, second: {self.__second_number}, action: {self.__action}")
+        print(
+            f"Before action\nfirst: {self.__first_number}, second: {self.__second_number}, action: {self.__action}",
+        )
         # if we are adding or subtracting for example 1.1 + 2.2 we will get 3.30000005432111 because of round-off
         # error. We want to display 3.3, so we need to round number.
         # [::-1] will reverse string so 1.2345 -> 2345.1.find(".") -> 4
         first_number_decimal_numbers = str(self.__first_number)[::-1].find(".")
         second_number_decimal_numbers = str(self.__second_number)[::-1].find(".")
-        round_to = first_number_decimal_numbers if first_number_decimal_numbers > second_number_decimal_numbers else second_number_decimal_numbers
+        round_to = (
+            first_number_decimal_numbers
+            if first_number_decimal_numbers > second_number_decimal_numbers
+            else second_number_decimal_numbers
+        )
         if self.__action == "+":
-            self.__first_number = round(self.__first_number + self.__second_number, round_to)
+            self.__first_number = round(
+                self.__first_number + self.__second_number,
+                round_to,
+            )
         elif self.__action == "-":
-            self.__first_number = round(self.__first_number - self.__second_number, round_to)
+            self.__first_number = round(
+                self.__first_number - self.__second_number,
+                round_to,
+            )
         elif self.__action == "*":
             self.__first_number = self.__first_number * self.__second_number
         elif self.__action == "/":
@@ -86,7 +97,9 @@ class CalculatorLogic:
                 self.update_textfield("Not a Number")
                 return
 
-        print(f"After action\nfirst: {self.__first_number}, second: {self.__second_number}, action: {self.__action}")
+        print(
+            f"After action\nfirst: {self.__first_number}, second: {self.__second_number}, action: {self.__action}",
+        )
         self.__second_number = 0
         self.__action = ""
         self.__first_number_dot = False
@@ -96,9 +109,17 @@ class CalculatorLogic:
 
     def on_action_number(self, number_as_str: str):
         if self.__action == "":
-            self.__first_number = self.add_number_to(number_as_str, self.__first_number, self.__first_number_dot)
+            self.__first_number = self.add_number_to(
+                number_as_str,
+                self.__first_number,
+                self.__first_number_dot,
+            )
         else:
-            self.__second_number = self.add_number_to(number_as_str, self.__second_number, self.__second_number_dot)
+            self.__second_number = self.add_number_to(
+                number_as_str,
+                self.__second_number,
+                self.__second_number_dot,
+            )
 
     def on_action_clear(self):
         if self.__action == "":
@@ -128,10 +149,14 @@ class CalculatorLogic:
     def on_action_dot(self):
         if self.__action == "":
             self.__first_number_dot = True
-            self.update_textfield(self.formatted_output(self.__first_number, self.__first_number_dot))
+            self.update_textfield(
+                self.formatted_output(self.__first_number, self.__first_number_dot),
+            )
         else:
             self.__second_number_dot = True
-            self.update_textfield(self.formatted_output(self.__second_number, self.__second_number_dot))
+            self.update_textfield(
+                self.formatted_output(self.__second_number, self.__second_number_dot),
+            )
 
     # Thanks to this function EventHandler can communicate with us
     def notify(self, is_number_action: bool, value: str):

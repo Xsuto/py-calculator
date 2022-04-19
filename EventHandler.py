@@ -1,11 +1,18 @@
+from typing import List
+
 import pygame
 
 from CalculatorLogic import CalculatorLogic
 from GridLayout import GridLayout
 
 
-class EventHandler():
-    def __init__(self, layout: GridLayout, calculator_logic: CalculatorLogic, running: [bool]):
+class EventHandler:
+    def __init__(
+        self,
+        layout: GridLayout,
+        calculator_logic: CalculatorLogic,
+        running: List[bool],
+    ):
         self.__layout = layout
         self.__calculator_logic = calculator_logic
         self.__is_app_running = running
@@ -69,8 +76,10 @@ class EventHandler():
 
     def on_keyup_event(self, event: pygame.event):
         for button in self.__layout.get_component_by_type("button"):
-            if (button.get_text().lower() == self.get_key(
-                    event) or button.get_text().lower() == self.get_alternative_key(event)) and button.is_activated():
+            if (
+                button.get_text().lower() == self.get_key(event)
+                or button.get_text().lower() == self.get_alternative_key(event)
+            ) and button.is_activated():
                 button.set_is_activated(False)
 
     def on_keydown_event(self, event: pygame.event):

@@ -1,3 +1,5 @@
+from typing import Tuple
+
 import pygame
 
 import settings
@@ -9,9 +11,17 @@ class Component:
     # name <- public
     # _name <- protected
     # __name <- private
-    def __init__(self, start_x: int, start_y: int, text: str, width: int, height: int,
-                 text_color: (int, int, int),
-                 background_color: (int, int, int), border_color: (int, int, int)):
+    def __init__(
+        self,
+        start_x: int,
+        start_y: int,
+        text: str,
+        width: int,
+        height: int,
+        text_color: Tuple[int, int, int],
+        background_color: Tuple[int, int, int],
+        border_color: Tuple[int, int, int],
+    ):
         self._x = start_x
         self._y = start_y
         self._text = text
@@ -20,7 +30,10 @@ class Component:
         self._text_color = text_color
         self._background_color = background_color
         self._activated_background_color = (
-            background_color[0] * 0.7, background_color[1] * 0.7, background_color[2] * 0.7)
+            int(background_color[0] * 0.7),
+            int(background_color[1] * 0.7),
+            int(background_color[2] * 0.7),
+        )
         self._current_background_color = background_color
         self._border_color = border_color
         self._is_activated = False
@@ -69,13 +82,21 @@ class Component:
             print("Rect: ", self._rect)
 
     def is_clicked(self, x: int, y: int):
-        if self._x + settings.HITBOX_MARGIN <= x <= self._width + self._x - settings.HITBOX_MARGIN:
-            if self._y + self._height - settings.HITBOX_MARGIN >= y >= self._y + settings.HITBOX_MARGIN:
+        if (
+            self._x + settings.HITBOX_MARGIN
+            <= x
+            <= self._width + self._x - settings.HITBOX_MARGIN
+        ):
+            if (
+                self._y + self._height - settings.HITBOX_MARGIN
+                >= y
+                >= self._y + settings.HITBOX_MARGIN
+            ):
                 if settings.DEBUG_POSITION:
                     print(
                         f"From is_clicked\nGot x: {x}"
                         f"\nMy x: {self._x - settings.HITBOX_MARGIN}"
-                        f"\nMy absolute width:{self._width + self._x - settings.HITBOX_MARGIN}"
+                        f"\nMy absolute width:{self._width + self._x - settings.HITBOX_MARGIN}",
                     )
                 return True
         return False
