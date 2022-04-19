@@ -36,6 +36,17 @@ class EventHandler():
                 return "="
             return key
 
+    def get_alternative_key(self, event: pygame.event):
+        key = pygame.key.name(event.key)
+        if key == "8":
+            return "*"
+        if key == "=":
+            return "+"
+        if key == "5":
+            return "%"
+        if key == "return":
+            return "="
+
     def mouse_down_event(self):
         x, y = pygame.mouse.get_pos()
         for component in self.__layout.get_components():
@@ -45,6 +56,7 @@ class EventHandler():
     def mouse_up_event(self):
         for component in self.__layout.get_components():
             if component.is_activated():
+                print(component.get_text())
                 component.set_is_activated(False)
                 self.notify_calculator_logic(component.get_text())
 
@@ -56,16 +68,16 @@ class EventHandler():
                     component.set_is_activated(False)
 
     def on_keyup_event(self, event: pygame.event):
-        key = self.get_key(event)
         for button in self.__layout.get_component_by_type("button"):
-            if button.get_text().lower() == key:
-                self.notify_calculator_logic(key)
+            if (button.get_text().lower() == self.get_key(
+                    event) or button.get_text().lower() == self.get_alternative_key(event)) and button.is_activated():
                 button.set_is_activated(False)
 
     def on_keydown_event(self, event: pygame.event):
         key = self.get_key(event)
         for button in self.__layout.get_component_by_type("button"):
-            if button.get_text().lower() == str(key):
+            if button.get_text().lower() == key:
+                self.notify_calculator_logic(key)
                 button.set_is_activated(True)
 
     def check_for_event(self):
