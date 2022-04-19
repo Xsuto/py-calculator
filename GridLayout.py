@@ -47,10 +47,10 @@ class GridLayout:
 
     def check_for_collision(self, grid_row_start: int, grid_row_end: int,
                             grid_column_start,
-                            grid_column_end):
+                            grid_column_end) -> bool:
         for item in self.__items:
-            if item.grid_row_start == grid_row_start and item.grid_row_end == grid_row_end:
-                if item.grid_column_start == grid_column_start and item.grid_column_end == grid_column_end:
+            if item.grid_column_start <= grid_column_start and item.grid_column_end - item.grid_column_start <= item.grid_column_end - grid_column_start:
+                if item.grid_row_start <= grid_row_start and item.grid_row_end - item.grid_row_start <= item.grid_row_end - grid_row_start:
                     print(f"\nERROR: Components at "
                           f"\ngrid_row_start,grid_row_end:{grid_row_start},{grid_row_end}"
                           f"\ngrid_column_start: grid_column_end: {grid_column_start},{grid_column_end}\n"
@@ -58,6 +58,8 @@ class GridLayout:
                     return True
         return False
 
+    # 0 1 2 3 4 5
+    # 0 1 X X 4 5
     def draw(self):
         for component in self.get_components():
             component.draw()

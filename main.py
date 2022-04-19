@@ -38,11 +38,16 @@ def build_layout() -> GridLayout:
     layout.addComponent(Button(text="3", background_color=settings.BTN_COLOR_PRIMARY), y, y + 1, 2, 3)
     layout.addComponent(Button(text="+", background_color=settings.BTN_COLOR_SPECIAL), y, y + 1, 3, 4)
     y += 1
-
     layout.addComponent(Button(text="0", background_color=settings.BTN_COLOR_PRIMARY), y, y + 1, 0, 2)
     layout.addComponent(Button(text=".", background_color=settings.BTN_COLOR_PRIMARY), y, y + 1, 2, 3)
     layout.addComponent(Button(text="=", background_color=settings.BTN_COLOR_SPECIAL), y, y + 1, 3, 4)
 
+
+    #Collision Tests
+    #layout.addComponent(Button(text="+", background_color=settings.BTN_COLOR_SPECIAL), 0,1, 0, 1)
+    #layout.addComponent(Button(text="+", background_color=settings.BTN_COLOR_SPECIAL), 3,4, 2, 4)
+    #layout.addComponent(Button(text="+", background_color=settings.BTN_COLOR_SPECIAL), 1, 3, 2, 3)
+    #layout.addComponent(Button(text="+", background_color=settings.BTN_COLOR_SPECIAL), 1,4, 0, 2)
     return layout
 
 
