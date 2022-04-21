@@ -112,12 +112,17 @@ class Component:
     def is_activated(self):
         return self._is_activated
 
-    # Virtual function that needs to be overwritten
-    def draw(self):
-        pass
-
     def render_border(self):
         pygame.draw.rect(WIN, self._border_color, self._rect, settings.BORDER_SIZE)
 
     def render_background(self):
         pygame.draw.rect(WIN, self._current_background_color, self._rect)
+
+    # Virtual function that needs to be overwritten
+    def render_text(self):
+        raise NotImplementedError()
+
+    def draw(self):
+        self.render_background()
+        self.render_border()
+        self.render_text()

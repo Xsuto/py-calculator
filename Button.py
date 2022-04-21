@@ -41,8 +41,3 @@ class Button(Component):
         text_rect.centerx = self._x + (self._width // 2)
         text_rect.centery = self._y + (self._height // 2)
         WIN.blit(text, text_rect)
-
-    def draw(self):
-        self.render_background()
-        self.render_border()
-        self.render_text()

@@ -68,8 +68,3 @@ class TextField(Component):
         text_rect.left = self._x + self._width - text_rect.right - settings.MARGIN
         text_rect.centery = self._height / 2 + self._y
         WIN.blit(text, text_rect)
-
-    def draw(self):
-        self.render_background()
-        self.render_border()
-        self.render_text()

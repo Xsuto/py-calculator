@@ -198,5 +198,6 @@ def main():
         draw_window(layout)
 
 
+# Thanks to this Calculator won't run if we are not directly running main.py (python3 main.py)
 if __name__ == "__main__":
     main()
