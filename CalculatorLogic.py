@@ -49,7 +49,7 @@ class CalculatorLogic:
             textfield[0].set_text(text)
 
     # Formatted output for textfield. If number is bigger than Maximal_..._Number or already has 13.1313+e13 then,
-    # function will return 13+e13. If number == 13.0  it will convert it to 13
+    # method will return 13+e13. If number == 13.0  it will convert it to 13
     def formatted_output(self, x: float, should_have_dot: bool = False) -> str:
         value = str(x)
         if should_have_dot:
@@ -154,7 +154,7 @@ class CalculatorLogic:
                 self.formatted_output(self.__second_number, self.__second_number_dot),
             )
 
-    # Thanks to this function EventHandler can communicate with us
+    # Thanks to this method EventHandler can communicate with us
     def notify(self, is_number_action: bool, value: str):
         if is_number_action:
             if self.__just_compute_equal:

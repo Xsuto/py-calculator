@@ -58,7 +58,7 @@ class Component:
     def set_text(self, text):
         self._text = str(text)
 
-    # Virtual function that needs to be overwritten
+    # Virtual method that needs to be overwritten
     def get_type(self) -> str:
         raise NotImplementedError()
 
@@ -119,7 +119,7 @@ class Component:
     def render_background(self):
         pygame.draw.rect(WIN, self._current_background_color, self._rect)
 
-    # Virtual function that needs to be overwritten
+    # Virtual method that needs to be overwritten
     def render_text(self):
         raise NotImplementedError()
 
