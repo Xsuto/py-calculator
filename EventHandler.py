@@ -41,6 +41,13 @@ class EventHandler:
             # alternative keybind for equal operation
             if key == "return":
                 return "="
+            # Numpad support. If we press key on numpad then pygame.key.name will return [key]
+            # For example for numpad 0 return [0]. key[2] might be out of range we have to put it in try block
+            try:
+                if key[0] == "[" and key[2] == "]":
+                    return key[1]
+            except IndexError:
+                pass
             return key
 
     def get_alternative_key(self, event: pygame.event):
