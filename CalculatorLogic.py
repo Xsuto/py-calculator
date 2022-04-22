@@ -44,7 +44,7 @@ class CalculatorLogic:
         return to
 
     def update_textfield(self, text: str):
-        textfield = self.__layout.get_component_by_type("textfield")
+        textfield = self.__layout.get_components_by_type("textfield")
         if len(textfield):
             textfield[0].set_text(text)
 

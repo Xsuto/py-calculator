@@ -81,7 +81,7 @@ class EventHandler:
                     component.set_is_activated(False)
 
     def on_keyup_event(self, event: pygame.event):
-        for button in self.__layout.get_component_by_type("button"):
+        for button in self.__layout.get_components_by_type("button"):
             if (
                 button.get_text().lower() == self.get_key(event)
                 or button.get_text().lower() == self.get_alternative_key(event)
@@ -90,7 +90,7 @@ class EventHandler:
 
     def on_keydown_event(self, event: pygame.event):
         key = self.get_key(event)
-        for button in self.__layout.get_component_by_type("button"):
+        for button in self.__layout.get_components_by_type("button"):
             if button.get_text().lower() == key:
                 self.notify_calculator_logic(key)
                 button.set_is_activated(True)

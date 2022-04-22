@@ -23,7 +23,7 @@ class GridLayout:
         self.__rows = rows
         self.__columns = columns
 
-    def get_component_by_type(self, component_type: str) -> List[Component]:
+    def get_components_by_type(self, component_type: str) -> List[Component]:
         output: List[Component] = []
         for component in self.get_components():
             if component.get_type() == component_type:
