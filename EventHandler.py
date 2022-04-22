@@ -17,7 +17,7 @@ class EventHandler:
         self.__calculator_logic = calculator_logic
         self.__is_app_running = running
 
-    def notify_calculator_logic(self, text: str or int):
+    def notify_calculator_logic(self, text: str):
         try:
             # We are doing this just to check if button text is a number if not it will throw exception
             int(text)
@@ -63,7 +63,6 @@ class EventHandler:
     def mouse_up_event(self):
         for component in self.__layout.get_components():
             if component.is_activated():
-                print(component.get_text())
                 component.set_is_activated(False)
                 self.notify_calculator_logic(component.get_text())
 

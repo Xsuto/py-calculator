@@ -38,6 +38,7 @@ class Button(Component):
             self._current_background_color,
         )
         text_rect = text.get_rect()
+        # Render text at center of the window
         text_rect.centerx = self._x + (self._width // 2)
         text_rect.centery = self._y + (self._height // 2)
         WIN.blit(text, text_rect)

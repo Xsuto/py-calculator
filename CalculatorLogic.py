@@ -4,18 +4,20 @@ import settings
 
 class CalculatorLogic:
     def __init__(self, layout: GridLayout):
-        self.__layout: GridLayout = layout
+        self.__layout = layout
         self.__first_number: float = 0
         self.__first_number_dot = False
-        self.__action: str = ""
+        self.__action = ""
         self.__second_number: float = 0
         self.__second_number_dot = False
-        # If we just compute equal and we clicked on a number then the first_number should be overwritten
+        # If we just compute equal, and we clicked on a number then the first_number should be overwritten
         # For example 4 + 5 = 9 -> click 1 -> first number should be 1 instead of 91
         self.__just_compute_equal = False
 
     def add_number_to(self, number_as_str: str, to: float, should_be_after_dot: bool):
         value = str(to)
+        # - 1 because in value string there will be . which is char not Digit. Also, we are not allowing numbers bigger
+        # than MAX... because with such large number we will get noise from round-off error
         if len(value) - 1 < settings.MAXIMAL_NUMBER_OF_DIGITS_IN_NUMBER:
             if should_be_after_dot:
                 dot = value.find(".")
@@ -46,8 +48,8 @@ class CalculatorLogic:
         if len(textfield):
             textfield[0].set_text(text)
 
-    # Formatted output for textfield If number is bigger than Maximal_..._Number or already has 13.1313+e13 then,
-    # function will return 13+e13 (for example) If number == 13.0  it will convert it to 13
+    # Formatted output for textfield. If number is bigger than Maximal_..._Number or already has 13.1313+e13 then,
+    # function will return 13+e13. If number == 13.0  it will convert it to 13
     def formatted_output(self, x: float, should_have_dot: bool = False) -> str:
         value = str(x)
         if should_have_dot:
@@ -60,9 +62,6 @@ class CalculatorLogic:
         return str(x)
 
     def on_action_equal(self):
-        print(
-            f"Before action\nfirst: {self.__first_number}, second: {self.__second_number}, action: {self.__action}",
-        )
         # if we are adding or subtracting for example 1.1 + 2.2 we will get 3.30000005432111 because of round-off
         # error. We want to display 3.3, so we need to round number.
         # [::-1] will reverse string so 1.2345 -> 2345.1.find(".") -> 4
@@ -97,9 +96,6 @@ class CalculatorLogic:
                 self.update_textfield("Not a Number")
                 return
 
-        print(
-            f"After action\nfirst: {self.__first_number}, second: {self.__second_number}, action: {self.__action}",
-        )
         self.__second_number = 0
         self.__action = ""
         self.__first_number_dot = False
@@ -128,7 +124,7 @@ class CalculatorLogic:
         else:
             self.__second_number = 0
             self.__second_number_dot = False
-        self.update_textfield(0)
+        self.update_textfield("0")
 
     def on_action_reverse_sign(self):
         if self.__action == "":
@@ -184,4 +180,5 @@ class CalculatorLogic:
             elif value == "%":
                 self.on_action_percentage()
             else:
+                # For action such as * + / -
                 self.__action = value

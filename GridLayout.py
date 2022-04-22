@@ -28,9 +28,12 @@ class GridLayout:
         for component in self.get_components():
             if component.get_type() == component_type:
                 output.append(component)
+        # We are returning here reference not copy to List of Components
+        # So if someone will mutate Component from output list this same component in self.__items will also change
         return output
 
     def get_components(self):
+        # Same here reference not copy
         return [item.component for item in self.__items]
 
     def addComponent(
@@ -47,6 +50,7 @@ class GridLayout:
             grid_column_start,
             grid_column_end,
         ):
+            # // is floor division operator
             component.set_x(grid_column_start * (self.__width // self.__columns))
             component.set_y(grid_row_start * (self.__height // self.__rows))
             component.set_width(

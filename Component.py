@@ -58,8 +58,9 @@ class Component:
     def set_text(self, text):
         self._text = str(text)
 
+    # Virtual function that needs to be overwritten
     def get_type(self) -> str:
-        return ""
+        raise NotImplementedError()
 
     def get_text(self) -> str:
         return self._text

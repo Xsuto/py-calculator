@@ -34,12 +34,13 @@ class TextField(Component):
     def get_type(self) -> str:
         return "textfield"
 
+    # We don't want to change background color on press, so we just overwrite this method
     def set_is_activated(self, is_activated: bool):
         pass
 
     def render_text(self):
         # We are creating custom font because self._text might be long and text might overflow self._rect,
-        # so in that case we just decrease font_size
+        # so in that case we want to decrease font_size
         font_size = settings.FONT_SIZE
         custom_font = pygame.font.Font(
             pygame.font.get_default_font(),
@@ -65,6 +66,7 @@ class TextField(Component):
                 self._background_color,
             )
             text_rect = text.get_rect()
+        # We want the text to be right-aligned
         text_rect.left = self._x + self._width - text_rect.right - settings.MARGIN
         text_rect.centery = self._height / 2 + self._y
         WIN.blit(text, text_rect)
