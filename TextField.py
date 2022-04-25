@@ -17,6 +17,7 @@ class TextField(Component):
         background_color=settings.BLACK,
         border_color=settings.BORDER_COLOR_PRIMARY,
     ):
+        # Inheritance we are calling parent constructor
         super().__init__(
             start_x,
             start_y,

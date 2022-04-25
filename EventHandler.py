@@ -31,12 +31,7 @@ class EventHandler:
         is_shift_pressed = pygame.key.get_mods() & pygame.KMOD_SHIFT
         key = pygame.key.name(event.key)
         if is_shift_pressed:
-            if key == "8":
-                return "*"
-            if key == "=":
-                return "+"
-            if key == "5":
-                return "%"
+            return self.get_alternative_key(event)
         else:
             # alternative keybind for equal operation
             if key == "return":

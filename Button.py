@@ -16,6 +16,7 @@ class Button(Component):
         background_color=settings.BTN_COLOR_PRIMARY,
         border_color=settings.BORDER_COLOR_PRIMARY,
     ):
+        # Inheritance we are calling parent constructor
         super().__init__(
             start_x,
             start_y,
