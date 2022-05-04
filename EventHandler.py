@@ -29,10 +29,10 @@ class EventHandler:
 
     def get_key(self, event: pygame.event) -> str:
         is_shift_pressed = pygame.key.get_mods() & pygame.KMOD_SHIFT
-        key = pygame.key.name(event.key)
         if is_shift_pressed:
             return self.get_alternative_key(event)
         else:
+            key = pygame.key.name(event.key)
             # alternative keybind for equal operation
             if key == "return":
                 return "="
@@ -73,10 +73,13 @@ class EventHandler:
         for component in self.__layout.get_components():
             if component.is_activated():
                 if not component.is_clicked(x, y):
+                    # If we pressed on button and then moved away cursor from it, we should deactivate this button.
                     component.set_is_activated(False)
 
     def on_keyup_event(self, event: pygame.event):
         for button in self.__layout.get_components_by_type("button"):
+            # We are checking directly button text with alternative key because user might press shift and =
+            # (activated +) and then releases shift then =, so in that case we should deactivate +
             if (
                 button.get_text().lower() == self.get_key(event)
                 or button.get_text().lower() == self.get_alternative_key(event)

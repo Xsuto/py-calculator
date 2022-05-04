@@ -5,7 +5,8 @@ import settings
 from Component import Component
 
 
-# dataclass is c like struct
+# dataclass looks like c struct
+# It will create for us constructor with specified properties
 @dataclass
 class GridItem:
     component: Component
@@ -78,8 +79,8 @@ class GridLayout:
         self,
         grid_row_start: int,
         grid_row_end: int,
-        grid_column_start,
-        grid_column_end,
+        grid_column_start: int,
+        grid_column_end: int,
     ) -> bool:
         for item in self.__items:
             if (
