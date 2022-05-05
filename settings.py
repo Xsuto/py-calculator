@@ -1,5 +1,4 @@
 DEBUG_POSITION = False
-DEBUG_EVENT = True
 
 CAPITATION = "Calculator"
 

@@ -184,14 +184,11 @@ def draw_window(layout: GridLayout):
 
 
 def main():
-    # We are putting bool into list because we want to force python into sharing this variable by reference with
-    # EventHandler, so we can stop app from inside this class
-    run = [True]
     clock = pygame.time.Clock()
     layout = build_layout()
     logic = CalculatorLogic(layout)
-    event_handler = EventHandler(layout, logic, run)
-    while run[0]:
+    event_handler = EventHandler(layout, logic)
+    while True:
         # with clock.tick we are locking refresh rate to settings.FPS just to lower cpu usage
         clock.tick(settings.FPS)
         event_handler.check_for_event()

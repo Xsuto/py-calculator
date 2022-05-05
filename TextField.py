@@ -5,6 +5,7 @@ from Component import Component
 from setup import WIN
 
 
+# TextField is inheriting from Component
 class TextField(Component):
     def __init__(
         self,
@@ -28,9 +29,6 @@ class TextField(Component):
             background_color,
             border_color,
         )
-
-    def set_text(self, text):
-        self._text = str(text)
 
     def get_type(self) -> str:
         return "textfield"

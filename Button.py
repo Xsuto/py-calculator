@@ -4,6 +4,7 @@ from setup import FONT
 from setup import WIN
 
 
+# Button is inheriting from Component
 class Button(Component):
     def __init__(
         self,

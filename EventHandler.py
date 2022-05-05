@@ -11,11 +11,9 @@ class EventHandler:
         self,
         layout: GridLayout,
         calculator_logic: CalculatorLogic,
-        running: List[bool],
     ):
         self.__layout = layout
         self.__calculator_logic = calculator_logic
-        self.__is_app_running = running
 
     def notify_calculator_logic(self, text: str):
         try:
@@ -96,7 +94,7 @@ class EventHandler:
     def check_for_event(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                self.__is_app_running[0] = False
+                exit(0)
             if event.type == pygame.MOUSEMOTION:
                 self.mouse_move_event()
             if event.type == pygame.MOUSEBUTTONUP:

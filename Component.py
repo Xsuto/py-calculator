@@ -58,6 +58,13 @@ class Component:
     def set_text(self, text):
         self._text = str(text)
 
+    def set_is_activated(self, is_activated: bool):
+        self._is_activated = is_activated
+        if self._is_activated:
+            self._current_background_color = self._activated_background_color
+        else:
+            self._current_background_color = self._background_color
+
     # Virtual method that needs to be overwritten
     def get_type(self) -> str:
         raise NotImplementedError()
@@ -76,6 +83,10 @@ class Component:
 
     def get_height(self):
         return self._height
+
+    # If variable is a bool we call getter for this variable is_foo
+    def is_activated(self):
+        return self._is_activated
 
     def update_rect(self):
         self._rect = pygame.Rect(self._x, self._y, self._width, self._height)
@@ -101,17 +112,6 @@ class Component:
                     )
                 return True
         return False
-
-    def set_is_activated(self, is_activated: bool):
-        self._is_activated = is_activated
-        if self._is_activated:
-            self._current_background_color = self._activated_background_color
-        else:
-            self._current_background_color = self._background_color
-
-    # If variable is a bool we call getter for this variable is_foo
-    def is_activated(self):
-        return self._is_activated
 
     def render_border(self):
         pygame.draw.rect(WIN, self._border_color, self._rect, settings.BORDER_SIZE)
