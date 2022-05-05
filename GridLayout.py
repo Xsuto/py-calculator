@@ -37,7 +37,7 @@ class GridLayout:
         # Same here reference not copy
         return [item.component for item in self.__items]
 
-    def addComponent(
+    def add_component(
         self,
         component: Component,
         grid_row_start: int = 0,
