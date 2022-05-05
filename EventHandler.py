@@ -1,5 +1,3 @@
-from typing import List
-
 import pygame
 
 from CalculatorLogic import CalculatorLogic
